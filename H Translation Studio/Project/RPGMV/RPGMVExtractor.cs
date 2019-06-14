@@ -301,6 +301,30 @@ namespace HTStudio.Project.RPGMV
                 {
                     WorkJArray(isApply, command["parameters"][0] as JArray);
                 }
+                else if (code == 122 && ExtractEventText)
+                {
+                    //확실하지 않은 작업이니 Catch
+                    //변수에 일본어 대입 확인
+                    try
+                    {
+                        var value = command["parameters"][4].ToString();
+                        if (Utils.isJapanese(value))
+                        {
+                            if (isApply)
+                            {
+                                command["parameters"][4] = QueryForTranslate(value);
+                            }
+                            else
+                            {
+                                InsertNewTranslateStrings(value);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.StackTrace);
+                    }
+                }
                 else if (code == 355 && ExtractEventScript) //Script
                 {
                     int startInx = i; //스크립트 구문은 본문도 데이터를 포함하고 있기 때문에 같이 고쳐야함!
