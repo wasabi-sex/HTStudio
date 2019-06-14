@@ -427,7 +427,17 @@ namespace HTStudio.Project.RPGMV
                     var lowerName = Path.GetFileName(path).ToLower();
                     if (lowerName.StartsWith("map") && !lowerName.StartsWith("mapinfos"))
                     {
-                        var map = JObject.Parse(File.ReadAllText(path));
+                        JObject map;
+                        try
+                        {
+                            map = JObject.Parse(File.ReadAllText(path));
+                        }
+                        catch (Exception e)
+                        {
+                            //오류가 난다면 제대로된 json 파일이 아니기 때문에 일단 거름
+                            continue;
+                        }
+
                         //MapVoice.json 같은 예외적인 파일을 거름
                         if (!map.ContainsKey("events")) continue;
 
