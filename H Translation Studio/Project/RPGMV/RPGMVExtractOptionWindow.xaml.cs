@@ -41,6 +41,7 @@ namespace HTStudio.Project.RPGMV
                 ExtractWeaponsCheckBox.IsChecked = value.ExtractWeapons;
 
                 ExtractSystemCheckBox.IsChecked = value.ExtractSystemData;
+                ExtractSmokeAddLogCheckBox.IsChecked = value.ExtractSmokeAddLog;
 
                 extractor = value;
             }
@@ -96,6 +97,9 @@ namespace HTStudio.Project.RPGMV
 
             if (ExtractSystemCheckBox.IsChecked.HasValue)
                 extractor.ExtractSystemData = ExtractSystemCheckBox.IsChecked.Value;
+
+            if (ExtractSmokeAddLogCheckBox.IsChecked.HasValue)
+                extractor.ExtractSmokeAddLog = ExtractSmokeAddLogCheckBox.IsChecked.Value;
 
             extractor.SaveOption();
         }

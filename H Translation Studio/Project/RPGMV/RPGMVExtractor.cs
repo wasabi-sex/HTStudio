@@ -90,6 +90,11 @@ namespace HTStudio.Project.RPGMV
         /// </summary>
         internal bool ExtractSystemData = true;
 
+        /// <summary>
+        /// 야사구레 흡연소 - addLog 추출
+        /// </summary>
+        internal bool ExtractSmokeAddLog = false;
+
         private string OptionPath {
             get {
                 return Path.Combine(project.ProjectPath, "RPGMVExtractTarget.json");
@@ -116,6 +121,15 @@ namespace HTStudio.Project.RPGMV
             ExtractTroops = json["ExtractTroops"].ToObject<bool>();
             ExtractWeapons = json["ExtractWeapons"].ToObject<bool>();
             ExtractSystemData = json["ExtractSystemData"].ToObject<bool>();
+            
+            try
+            {
+                ExtractSmokeAddLog = json["ExtractSmokeAddLog"].ToObject<bool>();
+            }
+            catch
+            {
+
+            }
         }
 
         public void SaveOption()
@@ -135,6 +149,7 @@ namespace HTStudio.Project.RPGMV
             json["ExtractTroops"] = ExtractTroops;
             json["ExtractWeapons"] = ExtractWeapons;
             json["ExtractSystemData"] = ExtractSystemData;
+            json["ExtractSmokeAddLog"] = ExtractSmokeAddLog;
 
             File.WriteAllText(OptionPath, JsonConvert.SerializeObject(json));
         }
@@ -199,6 +214,7 @@ namespace HTStudio.Project.RPGMV
             
             if(isApply)
             {
+                
                 string result = script;
                 foreach (Match match in matches)
                 {
@@ -381,6 +397,26 @@ namespace HTStudio.Project.RPGMV
                     else
                     {
                         WorkScripts(isApply, builder.ToString());
+                    }
+                }
+                else if(code == 356)
+                {
+                    var value = command["parameters"][0].ToString();
+                    if (isApply)
+                    {
+                        if (ExtractSmokeAddLog && value.Trim().StartsWith("addLog"))
+                        {
+                            //addLog Text
+                            command["parameters"][0] = "addLog " + QueryForTranslate(value.Substring(7));
+                        }
+                    }
+                    else
+                    {
+                        if (ExtractSmokeAddLog && value.Trim().StartsWith("addLog"))
+                        {
+                            //addLog Text
+                            InsertNewTranslateStrings(value.Substring(7));
+                        }
                     }
                 }
 
