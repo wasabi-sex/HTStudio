@@ -83,6 +83,7 @@ namespace HTStudio.Project.Base
 
             if ((result = RPGMV.Dieselmine.RPGMVDieselmineProject.Identification(path)) != null) return result;
             if ((result = RPGMV.RPGMVProject.Identification(path)) != null) return result;
+            if ((result = TES.TesProject.Identification(path)) != null) return result;
 
             return new BaseProject(path);
         }

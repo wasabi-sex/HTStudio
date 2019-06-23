@@ -93,6 +93,8 @@
     </Compile>
     <Compile Include="Project\RPGMV\RPGMVExtractor.cs" />
     <Compile Include="Project\RPGMV\RPGMVProject.cs" />
+    <Compile Include="Project\TES\TesExtractor.cs" />
+    <Compile Include="Project\TES\TesProject.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
